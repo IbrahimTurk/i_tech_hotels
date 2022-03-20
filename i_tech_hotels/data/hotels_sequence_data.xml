@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="reser_sequence" model="ir.sequence">
+        <field name="name">resersequence</field>
+        <field name="code">resersequence</field>
+        <field name="prefix">RINVO</field>
+        <field name="padding">5</field>
+        <field name="company_id" eval="False"/>
+    </record>
+
+
+</odoo>

@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <record id="paperformat_custom" model="report.paperformat">
+            <field name="name">Custom European A4</field>
+            <field name="format">A4</field>
+            <field name="page_height">0</field>
+            <field name="page_width">0</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">25</field>
+            <field name="margin_bottom">28</field>
+            <field name="margin_left">7</field>
+            <field name="margin_right">7</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">20</field>
+            <field name="dpi">110</field>
+        </record>
+        <report
+                id="hotels_rooms_report"
+                string="Rooms PDF"
+                model="hotels.reservation"
+                report_type="qweb-pdf"
+                file="i_tech_hotels.hotels_rooms_template"
+                name="i_tech_hotels.hotels_rooms_template"
+        />
+        <report
+                id="hotels_hall_report"
+                string="hall PDF"
+                model="hotels.reservation"
+                report_type="qweb-pdf"
+                file="i_tech_hotels.hotels_hall_template"
+                name="i_tech_hotels.hotels_hall_template"
+        />
+
+ 
+
+</odoo>

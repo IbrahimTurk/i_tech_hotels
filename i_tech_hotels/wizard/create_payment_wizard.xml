@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+
+    <record model="ir.ui.view" id="create_payment_wizard_form">
+        <field name="name">create.payment.wizard.form</field>
+        <field name="model">create.payment.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Set Payment Journal">
+                <group>
+                    <field name="journal_id" options="{'no_create_edit': True, 'no_create': True, 'no_open': True}"/>
+                     <field name="amount"/>
+                    <field name="notes"/>
+                    <field name="is_currencyrate"/>
+                    <field name="currency_rate" attrs="{'invisible': [('is_currencyrate','==',False)]}"/>
+                     <field name="currency_amount" attrs="{'invisible': [('is_currencyrate','==',False)]}"/>
+                    
+                </group>
+                <footer>
+                    
+                    <button string="Set Journal" name="create_payment" type="object" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_create_payment_wizard" model="ir.actions.act_window">
+        <field name="name">Set Payment Journal</field>
+        <field name="res_model">create.payment.wizard</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_id" ref="create_payment_wizard_form"/>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+
+</odoo>

@@ -1,0 +1,7 @@
+<odoo>
+    <data>
+        <record id="reservation_cancel_group" model="res.groups">
+            <field name="name">Reservation Cancel</field>
+        </record>
+    </data>
+</odoo>

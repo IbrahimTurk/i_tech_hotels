@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<data>
+         <template id="hotels_rooms_template">
+            <t t-call="web.html_container">
+    <t t-call="web.external_layout" t-lang="ar">
+            <t t-foreach="docs" t-as="doc">
+                <div class="page">
+                     <div style="position:relative;width : 100%;top:-90px;" class="text-center">
+                    <img t-att-src="'/i_tech_hotels/static/src/image/logo.png'" width="400" height="400" border="2"/>
+                  </div>
+                    <div style="width : 100%" class="text-right">
+                      <strong>اسم الزبون :</strong>
+                     
+                        <span>
+                               <strong t-field="doc.customername"/>  
+                        </span>
+                    </div>
+                     <br>
+                    </br>
+                    <div style="width : 100%" class="text-right">
+                        <strong>الغرفة :</strong>
+                        <span>
+                          <strong t-field="doc.room_id.name"/>  
+                        </span>
+                    </div>
+                     <br>
+                    </br>
+                    <div style="width : 100%" class="text-right">
+                        <strong> مدة الحجز :</strong>
+                        <span>
+                          <strong> من تاريخ  :</strong>
+                          <span>
+                          <span t-esc="doc.from_date" t-option='{"format": "dd/MM/yyy"}'/>  
+                        </span>
+                         <strong> الى تاريخ   :</strong>
+                          <span>
+                          <strong t-esc="doc.to_date" t-option='{"format": "dd/MM/yyy"}'/> 
+                        </span>
+                        </span>
+                    </div>
+                     <br>
+                    </br>
+                    <div style="width : 100%" class="text-right">
+                        <strong>مسئول المبيعات :</strong>
+                        <span>
+                          <strong t-field="doc.salesman.name"/>  
+                        </span>
+                    </div>
+                    <br/>
+                    <br/>
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr style="color:  black">
+                                <th class="text-center">عدد الليالي</th>
+                                <th class="text-center">السعر</th>
+                                <th class="text-center">الاجمالي</th>
+                            </tr>
+                             <t t-foreach="doc.services_ids" t-as="serv">
+                            <tr style="color:  black">
+                                <th t-esc="'%.0f'% serv.qty" class="text-center"/>
+                                <th t-esc="'%.0f'% serv.price" class="text-center"/>
+                                <th t-esc="'%.0f'% serv.total" class="text-center"/>
+                            </tr>
+                            </t>
+                           <tr style="color:  black">
+                                <th class="text-center" colspan="2">المبلغ الدفوع</th>
+                                 <t t-set="pay_vaule" t-value="0"/>
+                                <t t-foreach="doc.account_payment_ids" t-as="tot">
+                                  <t t-set="pay_vaule" t-value="pay_vaule+tot.amount_company_currency_signed"/>
+                                </t>
+                                <th class="text-center"><t t-esc="pay_vaule" t-option='{"widget": "int"}'/></th>
+                            </tr>
+                        </thead>
+                    </table>
+                    <br/>
+                    
+                    <br/>
+                     <br/>
+                    
+                    <br/>
+                     <br/>
+                    
+                    <br/>
+                     <div style="width:80%" name="signature">
+                        <div class="mt32 ml64 mr4 text-right">
+                            <strong>التوقيع</strong>
+                        </div>
+                        <div/>
+                    </div>
+                </div>
+            </t>
+         </t>
+      </t>
+    </template>
+
+
+ <template id="hotels_hall_template">
+ <t t-call="web.html_container">
+    <t t-call="web.external_layout" t-lang="ar">
+            <t t-foreach="docs" t-as="doc">
+                <div class="page">
+                     <div style="position:relative;width : 100%;top:-90px;" class="text-center">
+                    <img t-att-src="'/i_tech_hotels/static/src/image/logo.png'" width="250" height="250" border="2"/>
+                  </div>
+                    <br>
+                    </br>
+                    <div style="width : 100%" class="text-right">
+                      <strong>اسم الزبون :</strong>
+                     
+                        <span>
+                               <strong t-field="doc.customername"/>  
+                        </span>
+                    </div>
+                    <div style="width : 100%" class="text-right">
+                        <strong>القاعة :</strong>
+                        <span>
+                          <strong t-field="doc.room_id.name"/>  
+                        </span>
+                    </div>
+                    <div style="width : 100%" class="text-right">
+                        <strong> تاريخ الحجز  :</strong>
+                        <span>
+                         <span t-esc="doc.from_date" t-option='{"format": "dd/MM/yyy"}'/> 
+                        </span>
+                    </div>
+                    <div style="width : 100%" class="text-right">
+                        <strong>مسئول المبيعات :</strong>
+                        <span>
+                          <strong t-field="doc.salesman.name"/>  
+                        </span>
+                    </div>
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr style="color:  black">
+                                <th class="text-center">االتفاصيل</th>
+                                <th class="text-center">العدد</th>
+                                <th class="text-center">السعر</th>
+                                <th class="text-center">الاجمالي</th>
+                            </tr>
+                             <t t-foreach="doc.services_ids" t-as="serv">
+                            <tr style="color:  black">
+                                <th t-field="serv.name" class="text-center"/>
+                                <th t-esc="'%.0f'% serv.qty" class="text-center"/>
+                                <th t-esc="'%.0f'% serv.price" class="text-center"/>
+                                <th t-esc="'%.0f'% serv.total" class="text-center"/>
+                            </tr>
+                          </t>  
+                          <tr style="color:  black">
+                                <th colspan="3" class="text-center">اجمالي المبلغ</th>ht>
+                                <th t-esc="doc.amount" colspan="1" class="text-center"/>
+                            </tr>
+                            <tr style="color:  black">
+                                <th class="text-center" colspan="3">المبلغ الدفوع</th>
+                                 <t t-set="pay_vaule" t-value="0"/>
+                                <t t-foreach="doc.account_payment_ids" t-as="tot">
+                                  <t t-set="pay_vaule" t-value="pay_vaule+tot.amount_company_currency_signed"/>
+                                </t>
+                                <th class="text-center"><t t-esc="pay_vaule" t-option='{"widget": "int"}'/></th>
+                            </tr>
+                        </thead>
+                    </table>
+                    <br/>
+                    
+                    <br/>
+                     <br/>
+                    
+                    <br/>
+                     <div style="width:80%" name="signature">
+                        <div class="mt32 ml64 mr4 text-right">
+                            <strong>التوقيع</strong>
+                        </div>
+                        <div />
+                    </div>
+                </div>
+            </t>
+         </t>
+      </t>
+    </template>
+
+
+
+
+
+    </data>
+
+</odoo>

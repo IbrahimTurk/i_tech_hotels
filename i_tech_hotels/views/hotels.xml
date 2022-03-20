@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="UTf-8" ?>
+
+<odoo>
+
+<record id="hotels_projects_list_view" model="ir.ui.view">
+<field name = "name">hotels_projects.list.view</field>
+<field name = "model">hotels.projects</field>
+<field name = "arch" type="xml">
+<tree>
+<field name = "name"/>
+<field name = "journal_revenue"/>
+<field name = "revenue_account_id"/>
+</tree>
+</field>
+</record>
+
+<record id="hotels_projects_form_view" model="ir.ui.view">
+<field name = "name">hotels_projects.form.view</field>
+<field name = "model">hotels.projects</field>
+<field name = "arch" type="xml">
+<form>
+<sheet>
+<group>
+<field name = "name"/>
+<field name = "journal_revenue"/>
+<field name = "revenue_account_id"/>
+</group>
+</sheet>
+
+
+</form>
+</field>
+</record>
+
+<record id="action_hotels_projects" model="ir.actions.act_window">
+<field name = "name">Projects</field>
+<field name = "type">ir.actions.act_window</field>
+<field name = "res_model">hotels.projects</field>
+<field name = "view_mode">tree,form</field>
+<field name = "context">{}</field>
+<field name = "domain">[]</field>
+</record>
+
+
+
+
+
+
+
+
+
+
+<record id="hotels_rooms_list_view" model="ir.ui.view">
+<field name = "name">hotels_rooms.list.view</field>
+<field name = "model">hotels.rooms</field>
+<field name = "arch" type="xml">
+<tree>
+<field name = "name"/>
+<field name = "project_id"/>
+<field name = "available"/>
+<field name = "sequnece"/>
+<field name = "price"/>
+</tree>
+</field>
+</record>
+
+<record id="hotels_rooms_form_view" model="ir.ui.view">
+<field name = "name">hotels_rooms.form.view</field>
+<field name = "model">hotels.rooms</field>
+<field name = "arch" type="xml">
+<form>
+<sheet>
+<group>
+<field name = "name"/>
+<field name = "project_id"/>
+<field name = "available"/>
+<field name = "sequnece"/>
+<field name = "price"/>
+</group>
+</sheet>
+
+</form>
+</field>
+</record>
+
+<record id="action_hotels_rooms" model="ir.actions.act_window">
+<field name = "name">Rooms</field>
+<field name = "type">ir.actions.act_window</field>
+<field name = "res_model">hotels.rooms</field>
+<field name = "view_mode">tree,form</field>
+<field name = "context">{}</field>
+<field name = "domain">[]</field>
+</record>
+
+
+
+
+
+
+
+
+
+
+<record id="hotels_services_list_view" model="ir.ui.view">
+<field name = "name">hotels_services.list.view</field>
+<field name = "model">hotels.services</field>
+<field name = "arch" type="xml">
+<tree>
+<field name = "create_ondate"/>
+<field name = "name"/>
+<field name = "reservation_id"/>
+<field name = "notes"/>
+<field name = "qty"/>
+<field name = "price"/>
+<field name = "total"/>
+</tree>
+</field>
+</record>
+
+<record id="hotels_services_form_view" model="ir.ui.view">
+<field name = "name">hotels_services.form.view</field>
+<field name = "model">hotels.services</field>
+<field name = "arch" type="xml">
+<form>
+<sheet>
+<group>
+<field name = "create_ondate"/>
+<field name = "name"/>
+<field name = "reservation_id"/>
+<field name = "notes"/>
+<field name = "qty"/>
+<field name = "price"/>
+<field name = "total"/>
+</group>
+</sheet>
+
+</form>
+</field>
+</record>
+
+<record id="action_hotels_services" model="ir.actions.act_window">
+<field name = "name">Services</field>
+<field name = "type">ir.actions.act_window</field>
+<field name = "res_model">hotels.services</field>
+<field name = "view_mode">tree,form</field>
+<field name = "context">{}</field>
+<field name = "domain">[]</field>
+</record>
+
+
+
+
+
+
+
+
+
+<record id="hotels_reservation_calendar_view" model="ir.ui.view">
+<field name = "name">hotels_reservation.calender.view</field>
+<field name = "model">hotels.reservation</field>
+<field name="groups_id" eval="[(4,ref('i_tech_hotels.reservation_cancel_group'))]"/>
+<field name = "arch" type="xml">
+<calendar string="Reservation Calendar" date_start="from_date" date_stop="to_date" mode="month" quick_add="False" color="room_id" scales="month" all_day="allday">
+<field name = "name"/>
+<field name="project_id" filters="1" write_field="project_id"/>
+<field name="room_id" filters="1" write_field="room_id"/>
+<field name="amount"/>
+<field name="reservation_status"/>
+</calendar>
+</field>
+</record>
+
+
+<record id="hotels_reservation_list_view" model="ir.ui.view">
+<field name = "name">hotels_reservation.list.view</field>
+<field name = "model">hotels.reservation</field>
+<field name = "arch" type="xml">
+<tree>
+<field name = "name"/>
+<field name="room_id"/>
+<field name="notes"/>
+<field name="amount"/>
+<field name="reservation_status"/>
+
+</tree>
+</field>
+</record>
+
+<record id="hotels_reservation_form_view" model="ir.ui.view">
+<field name = "name">hotels_reservation.form.view</field>
+<field name = "model">hotels.reservation</field>
+<field name = "arch" type="xml">
+<form string="Invoice" class="o_employee_form">
+  <header>
+<button name="action_customer_pay" type="object" string="Customer Pay" class="oe_highlight"  attrs="{'invisible':[('reservation_status', '!=', 'submit')]}"/>
+<button name="action_to_reservation" type="object"  string="Reservation" class="oe_highlight" attrs="{'invisible':[('reservation_status', '!=', 'draft')]}" />
+<button name="action_to_submit" type="object"  string="Submit" class="oe_highlight" attrs="{'invisible':[('reservation_status', '!=', 'reservation')]}" />
+<button name="action_to_cancel" groups="i_tech_hotels.reservation_cancel_group" type="object" string="Cancel" class="oe_highlight" attrs="{'invisible':[('reservation_status', '!=', 'submit'),('reservation_status', '!=', 'paid'),('reservation_status', '!=', 'reservation')]}"/>
+<field name="reservation_status"
+                               widget="statusbar"
+                               />
+ </header>
+<sheet>
+
+<div class="oe_title pr-0">
+
+                            <h1 class="d-flex flex-row justify-content-between">
+                                <field name="name" readonly="1"/>
+                            </h1>
+                            <h3>
+                                <p>
+                                    Reservation Date:
+                                    <field name="reservation_date"/>
+                                </p>
+                            </h3>
+                        </div>
+
+<group>
+<group>
+<field name="project_id" attrs="{'readonly':[('reservation_status', '!=', 'draft'),('reservation_status', '!=', 'reservation')]}"  options="{'no_create_edit': True, 'no_create': True, 'no_open': True}"/>
+<field name="room_id" attrs="{'readonly':[('reservation_status', '!=', 'draft'),('reservation_status', '!=', 'reservation')]}" options="{'no_create_edit': True, 'no_create': True, 'no_open': True}"/>
+<field name="customername" attrs="{'readonly':[('reservation_status', '!=', 'draft'),('reservation_status', '!=', 'reservation')]}"/>
+<field name="amount" Readonly='1'/>
+
+
+</group>
+<group>
+<field name="salesman" attrs="{'readonly':[('reservation_status', '!=', 'draft'),('reservation_status', '!=', 'reservation')]}" options="{'no_create_edit': True, 'no_create': True, 'no_open': True}"/>
+<field name="from_date" attrs="{'readonly':[('reservation_status', '!=', 'draft'),('reservation_status', '!=', 'reservation')]}"/>
+<field name="to_date" attrs="{'readonly':[('reservation_status', '!=', 'draft'),('reservation_status', '!=', 'reservation')]}"/>
+<field name="notes" attrs="{'readonly':[('reservation_status', '!=', 'draft'),('reservation_status', '!=', 'reservation')]}"/>
+<field name="chick_line" invisible="1" attrs="{'readonly':['|',('reservation_status', '!=', 'draft'),('reservation_status', '!=', 'reservation')]}"/>
+</group>
+</group>
+
+
+<notebook>
+     <page name="services" string="Services">
+       <field name="services_ids" force_save="1" attrs="{'readonly':[('reservation_status', '!=', 'draft'),('reservation_status', '!=', 'reservation')]}">
+        <tree editable="bottom" create="1" delete="1">
+        <field name="create_ondate"/>
+        <field name="name"/>
+        <field name="notes" />
+        <field name="qty"/>
+        <field name="price"/>
+        <field name="total"/>
+        <field name="is_admin" />
+       </tree>
+        </field>
+        </page>
+         <page name="Journals" string="Journals">
+        <field name="account_move_ids" force_save="1" readonly="1">
+        <tree>
+        <field name="name"/>
+        <field name="date"/>
+        <field name="ref"/>
+        <field name="activity_ids"/>
+        <field name="amount_total_signed"/>
+        <field name="currency_id"/>
+        <field name="to_check"/>
+        <field name="state"/>
+        </tree>
+        </field>
+     </page>
+        <page name="Payments" string="Payments">
+        <field name="account_payment_ids" force_save="1" readonly="1">
+        <tree>
+        <field name="date"/>
+        <field name="name"/>
+        <field name="ref"/>
+        <field name="journal_id"/>
+        <field name="amount_signed" sum="Total"/>
+        <field name="currency_id"/>
+        <field name="amount_company_currency_signed" sum="Total"/>
+        <field name="state" widget="badge" decoration-info="state == 'draft'" decoration-success="state == 'posted'"/>
+        </tree>
+        </field>
+     </page>
+ </notebook>
+  <div class="oe_chatter">
+        <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+        <field name="message_ids" widget="mail_thread"/>
+        <field name="activity_ids"/>
+ </div>
+</sheet>
+
+</form>
+</field>
+</record>
+
+
+
+
+
+
+<record id="action_hotels_reservation" model="ir.actions.act_window">
+<field name = "name">Reservation</field>
+<field name = "type">ir.actions.act_window</field>
+<field name = "res_model">hotels.reservation</field>
+<field name = "view_mode">calendar,tree,form</field>
+<field name = "context">{}</field>
+<field name = "domain">[('reservation_status','!=','draft'),('reservation_status','!=','cancel')]</field>
+</record>
+
+<record id="action_hotels_reservationreport" model="ir.actions.act_window">
+<field name = "name">Reservation Report</field>
+<field name = "type">ir.actions.act_window</field>
+<field name = "res_model">hotels.reservation</field>
+<field name = "view_mode">tree,form</field>
+<field name = "context">{}</field>
+<field name = "domain">[]</field>
+</record>
+
+
+
+
+
+
+<menuitem id="hotels_menu" 
+          name="Hotels"
+          sequence="7"
+          />
+
+
+<menuitem id="projects_menu"
+          name="Projects" 
+          parent="hotels_menu"
+          action="action_hotels_projects"
+          sequence="10"/> 
+
+<menuitem id="rooms_menu"
+          name="Rooms" 
+          action="action_hotels_rooms"
+          parent="hotels_menu"
+          sequence="8"/>   
+
+<menuitem id="services_menu"
+          name="Services" 
+          action="action_hotels_services"
+          parent="hotels_menu"
+          sequence="9"/>  
+
+<menuitem id="reservation_menu" 
+          name="Reservation"
+          action="action_hotels_reservation"
+          parent="hotels_menu"
+          sequence="2"/>
+<menuitem id="reservation_report" 
+          name="Reservation Report"
+          action="action_hotels_reservationreport"
+          parent="hotels_menu"
+          sequence="3"/>
+
+</odoo>
