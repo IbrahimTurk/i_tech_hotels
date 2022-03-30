@@ -75,6 +75,7 @@ class projects(models.Model):
                    else:
                     total_debit += aml.amount_currency
                 record.amount = total_debit-total_credit
+        return {'domain': {'journal_id': [('journal_user_id', '=', self.env.user.name)]}}        
 
 
 
