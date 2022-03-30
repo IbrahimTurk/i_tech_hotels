@@ -4,5 +4,6 @@ h_rooms_user,base user,model_hotels_rooms,base.group_user,1,1,1,1
 h_services_user,base user,model_hotels_services,base.group_user,1,1,1,1
 h_reservation_user,base user,model_hotels_reservation,base.group_user,1,1,1,1
 h_payment_user,base user,model_create_payment_wizard,base.group_user,1,1,1,1
+h_accbal_user,base user,model_hotels_accbal,base.group_user,1,1,1,1
 
 

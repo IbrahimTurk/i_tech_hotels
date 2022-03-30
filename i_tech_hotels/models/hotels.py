@@ -1,5 +1,7 @@
 from odoo import api, fields, models,api,fields, exceptions, _
 from odoo.exceptions import ValidationError
+from datetime import datetime, timedelta
+
 class projects(models.Model):
     _inherit = ['mail.thread']
     _name = "hotels.projects"
@@ -45,6 +47,35 @@ class services(models.Model):
     #@api.depends('qty','price')
     #def _total(self):
     #     self.total =self.qty * self.price
+
+class projects(models.Model):
+    _name = "hotels.accbal"
+
+
+    journal_id = fields.Many2one('account.journal', string='Journal', required=True,domain=[('type','in',('bank','cash'))])
+    amount = fields.Float(string="Amount",compute="_aomunt", tracking=True,store=True)
+
+    @api.onchange('journal_id')
+    def _aomunt(self):
+        for record in self:
+           if self.journal_id: 
+                d = datetime.today()
+                aml_ids = self.env['account.move.line'].search([('reconciled', '=', False),
+                    ('account_id', '=',self.journal_id.default_account_id.id ),
+                    ('move_id.state', '=', 'posted'),
+                    ('create_date','<=',d)
+                ])
+                
+                total_credit = 0
+                total_debit = 0
+                for aml in aml_ids:
+                   if self.env.user.company_id.currency_id==self.journal_id.currency_id:      
+                    total_credit += aml.credit
+                    total_debit += aml.debit
+                   else:
+                    total_debit += aml.amount_currency
+                record.amount = total_debit-total_credit
+
 
 
 class reservation(models.Model):

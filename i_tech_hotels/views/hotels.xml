@@ -154,6 +154,40 @@
 
 
 
+<record id="hotels_balance_form_view" model="ir.ui.view">
+<field name = "name">hotels_balance.form.view</field>
+<field name = "model">hotels.accbal</field>
+<field name = "arch" type="xml">
+<form create="0" edit="0">
+<sheet>
+<group>
+<field name = "journal_id"  options="{'no_create_edit': True, 'no_create': True, 'no_open': True}"/>
+<field name = "amount"/>
+</group>
+</sheet>
+
+
+</form>
+</field>
+</record>
+
+<record id="action_hotels_balance" model="ir.actions.act_window">
+<field name = "name">Account Balance</field>
+<field name = "type">ir.actions.act_window</field>
+<field name = "res_model">hotels.accbal</field>
+<field name = "view_mode">form</field>
+<field name = "context">{}</field>
+<field name = "domain">[]</field>
+</record>
+
+
+
+
+
+
+
+
+
 
 <record id="hotels_reservation_calendar_view" model="ir.ui.view">
 <field name = "name">hotels_reservation.calender.view</field>
@@ -326,6 +360,12 @@
           name="Projects" 
           parent="hotels_menu"
           action="action_hotels_projects"
+          sequence="11"/> 
+
+<menuitem id="balance_menu"
+          name="Account Balance" 
+          parent="hotels_menu"
+          action="action_hotels_balance"
           sequence="10"/> 
 
 <menuitem id="rooms_menu"
