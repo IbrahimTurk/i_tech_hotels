@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 {
-    'name' : 'Hotels',
+    'name' : 'I-Tech Hotels',
     'version' : '15.0',
     'summary': 'for Hotels',
     'sequence': 10,
