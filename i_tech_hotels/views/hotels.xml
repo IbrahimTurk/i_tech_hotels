@@ -361,6 +361,7 @@
 <menuitem id="hotels_menu" 
           name="Hotels"
           sequence="7"
+          web_icon="i_tech_hotels,static/description/icon.png"
           />
 
 
