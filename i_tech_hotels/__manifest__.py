@@ -5,9 +5,12 @@
     'version' : '15.0',
     'summary': 'for Hotels',
     'sequence': 10,
+    'price':'249.99',
+    'currency': 'USD',
+    'license' : 'LGPL-3',
     'description': ' Hotels Managment',
-    'category': 'Extra Tools',
     'author': 'I-Tech',
+    'category': 'Extra Tools',
     'website': 'https://www.odoo.com/app/billing',
     'depends' : ['base_setup', 'portal', 'digest','account','mail'],
     'data': [
@@ -28,3 +31,4 @@
     'application': True,
     'auto_install': False,
 }
+
