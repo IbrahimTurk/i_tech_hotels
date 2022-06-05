@@ -29,6 +29,8 @@ class CreatePaymentWizard(models.TransientModel):
 
     api.model
     def create_payment(self):
+     if self.journal_id.currency_id.rate ==0:
+      raise ValidationError('The journal must have a currency') 
      if self.amount < 1:
        raise ValidationError('The Amount should be > 1 ')
      else: 

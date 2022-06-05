@@ -10,37 +10,37 @@ class projects(models.Model):
     ]
 
 
-    name = fields.Char(string="Room Name", required=True) 
+    name = fields.Char(string="Name", required=True) 
     journal_revenue = fields.Many2one('account.journal', string='Journal For Revenue', required=True)
-    revenue_account_id = fields.Many2one('account.account', string='Customer Account: ', required=True)
+    revenue_account_id = fields.Many2one('account.account', string='Revenue Account: ', required=True)
 
 class rooms(models.Model):
-    _inherit = ['mail.thread']
+    _inherit = ['mail.thread','mail.activity.mixin']
     _name = "hotels.rooms"
     _sql_constraints = [
         ('rooms_uniuqe', 'unique(name)', 'name already exists!')
     ]
 
 
-    name = fields.Char(string="Room Name", required=True) 
-    project_id = fields.Many2one("hotels.projects",string="Project Name", required=True)
-    available = fields.Boolean()
-    sequnece =fields.Integer(string="Sequnece Number", required=True)
-    price = fields.Float(string="Price", required=True)
+    name = fields.Char(string="Room Name", required=True, tracking=True) 
+    project_id = fields.Many2one("hotels.projects",string="Project Name", required=True, tracking=True)
+    available = fields.Boolean( tracking=True)
+    sequnece =fields.Integer(string="Sequnece Number", required=True, tracking=True)
+    price = fields.Float(string="Price", required=True, tracking=True)
     
 
 class services(models.Model):
-    _inherit = ['mail.thread']
+    _inherit = ['mail.thread','mail.activity.mixin']
     _name = "hotels.services"
     
-    name = fields.Char(string="Name")
-    reservation_id = fields.Many2one('hotels.reservation', string='reservation ID')
+    name = fields.Char(string="Name" , tracking=True)
+    reservation_id = fields.Many2one('hotels.reservation', string='reservation ID' , tracking=True)
     create_ondate = fields.Datetime('Date', required=False, readonly=True,
                                     default=lambda self: fields.datetime.now())                              
-    notes =fields.Char("Notes")
-    qty = fields.Integer("Qty")
-    price = fields.Float("Price")
-    total = fields.Float("Total",readonly=True,compute="_total", tracking=True,store=True)
+    notes =fields.Char("Notes" , tracking=True)
+    qty = fields.Integer("Qty" , tracking=True)
+    price = fields.Float("Price" , tracking=True)
+    total = fields.Float("Total",readonly=True,compute="_total", tracking=True,store=True )
     is_admin = fields.Boolean(readonly=True)
 
 
@@ -50,9 +50,9 @@ class services(models.Model):
 
 class projects(models.Model):
     _name = "hotels.accbal"
+    _inherit = ['mail.thread','mail.activity.mixin']
 
-
-    journal_id = fields.Many2one('account.journal', string='Journal', required=True,domain=[('type','in',('bank','cash'))])
+    journal_id = fields.Many2one('account.journal',tracking=True, string='Journal', required=True,domain=[('type','in',('bank','cash'))])
     amount = fields.Float(string="Amount",compute="_aomunt", tracking=True,store=True)
 
     @api.onchange('journal_id')
@@ -167,10 +167,10 @@ class reservation(models.Model):
        if fromdate:
          raise ValidationError('Reservation Must be have uniuqe date and Room  To Can Created ')
        else:
-
+            roomSq=self.env['hotels.rooms'].sudo().search([('id','=',(vals.get('room_id')))], limit=1)
 #         if chick==room_id.name:
             if vals.get('name', _('New')) == _('New'):
-                    vals['name'] = self.env['ir.sequence'].next_by_code('resersequence') or _('New')
+                    vals['name'] = roomSq.name+'/'+self.env['ir.sequence'].next_by_code('resersequence') or _('New')
             result = super(reservation, self).create(vals)                   
             return result
 #        else:
@@ -186,7 +186,7 @@ class reservation(models.Model):
     def onchange_project_id(self):
         for rec in self:
             self.room_id = False
-            return {'domain': {'room_id': [('project_id', '=', rec.project_id.id)]}}
+            return {'domain': {'room_id': [('project_id', '=', rec.project_id.id),('available', '=', True)]}}
 
     @api.onchange('room_id','from_date','to_date')
     def onchange_room_id(self):

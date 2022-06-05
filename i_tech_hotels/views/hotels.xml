@@ -78,7 +78,11 @@
 <field name = "price"/>
 </group>
 </sheet>
-
+ <div class="oe_chatter">
+        <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+        <field name="message_ids" widget="mail_thread"/>
+        <field name="activity_ids"/>
+ </div>
 </form>
 </field>
 </record>
@@ -132,6 +136,11 @@
 <field name = "price"/>
 <field name = "total"/>
 </group>
+ <div class="oe_chatter">
+        <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+        <field name="message_ids" widget="mail_thread"/>
+        <field name="activity_ids"/>
+ </div>
 </sheet>
 
 </form>
@@ -226,7 +235,7 @@
 <field name = "arch" type="xml">
 <form string="Invoice" class="o_employee_form">
   <header>
-<button name="action_customer_pay" type="object" string="Customer Pay" class="oe_highlight"  attrs="{'invisible':[('reservation_status', '!=', 'submit')]}"/>
+<button name="action_customer_pay" type="object" string="Customer Pay" class="oe_highlight"  attrs="{'invisible':[('reservation_status', 'not in', ('submit','reservation'))]}"/>
 <button name="action_to_reservation" type="object"  string="Reservation" class="oe_highlight" attrs="{'invisible':[('reservation_status', '!=', 'draft')]}" />
 <button name="action_to_submit" type="object"  string="Submit" class="oe_highlight" attrs="{'invisible':[('reservation_status', '!=', 'reservation')]}" />
 <button name="action_to_cancel" groups="i_tech_hotels.reservation_cancel_group" type="object" string="Cancel" class="oe_highlight" attrs="{'invisible':[('reservation_status', '!=', 'submit'),('reservation_status', '!=', 'paid'),('reservation_status', '!=', 'reservation')]}"/>
@@ -278,7 +287,6 @@
         <field name="qty"/>
         <field name="price"/>
         <field name="total"/>
-        <field name="is_admin" />
        </tree>
         </field>
         </page>
