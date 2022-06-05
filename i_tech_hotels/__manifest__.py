@@ -7,6 +7,7 @@
     'sequence': 10,
     'description': ' Hotels Managment',
     'category': 'Extra Tools',
+    'author': 'I-Tech',
     'website': 'https://www.odoo.com/app/billing',
     'depends' : ['base_setup', 'portal', 'digest','account','mail'],
     'data': [
