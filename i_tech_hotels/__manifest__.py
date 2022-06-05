@@ -22,6 +22,7 @@
         "reports/templates/hotels_template_report.xml",
     ],
     'demo': [],
+    'Images': ['static/description/hotels.gif'],
     'installable': True,
     'application': True,
     'auto_install': False,
